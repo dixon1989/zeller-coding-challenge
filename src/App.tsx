@@ -1,11 +1,11 @@
 import React from 'react';
 import Amplify, { API, graphqlOperation } from 'aws-amplify'
 import awsconfig from './aws-exports';
-import logo from './logo.svg';
 import './App.css';
 import { ListZellerCustomers } from './graphql/queries'
 import { GetCustomerQuery, ICustomer } from './types'
-
+import { filterResult } from './action/Functions'
+import { Container, Radio } from "./components";
 
 function App() {
 
@@ -14,6 +14,11 @@ function App() {
   const [ customers, setCustomers ] = React.useState<ICustomer[]>();
   const [ name, setName ] = React.useState('Admin');
   const [ filterCustomer, setFilterCustomer ] = React.useState<ICustomer[]>();
+
+  const userRole = [
+    'Admin',
+    'Manager'
+  ]
 
   React.useEffect(() => {
     const fetchCustomers = async () => {
@@ -26,42 +31,23 @@ function App() {
       } catch (err) {
         console.log('error fetching customers') }
       }
-      const filterResult = (name: string) => {
-          const result = customers?.filter(x => x.role === name);
-          setFilterCustomer(result)
-        }
-      
-      fetchCustomers()
-      filterResult(name)
-}, [customers, name])
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-  const { value } = e.target;
-  setName(value)
-};
+      fetchCustomers()
+      setFilterCustomer(filterResult(name, customers))
+  }, [customers, name])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { value } = e.target;
+    setName(value)
+  };
 
   return (
-    <div className="App">
+    <Container>
       <form>
         <h2>User Types</h2>
-              <label>
-                <input
-                  type="radio"
-                  value="Admin"
-                  checked={name === "Admin"}
-                  onChange={handleChange}
-                  />
-                    <span>Admin</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="Manager"
-                  checked={name === "Manager"}
-                  onChange={handleChange}
-                  />
-                    <span>Manager</span>
-              </label>
+          {userRole.map((r: string) => (
+            <Radio name={r} checked={name} handleChange={handleChange} />
+          ))}
         </form>
         <h2>{name} Users</h2>
         <div>
@@ -74,7 +60,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
                 </div>
             ))}
         </div>
-    </div>
+    </Container>
   );
 }
 
