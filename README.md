@@ -14,6 +14,8 @@
 - Run "npm start" to view the web application on my work.
 
 ## Added Dependency
+- typescript
+- hooks
 - AWS Amplify for GraphQL
 - styled-components
 
