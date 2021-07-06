@@ -1,6 +1,5 @@
 import { RadioContainer }  from "../components"
 
-
 export const Radio = (props: { name: string | number | readonly string[] | undefined; checked: string, handleChange: any }) => {
     return (
     <RadioContainer checked={props.name === props.checked ? true : false}>
