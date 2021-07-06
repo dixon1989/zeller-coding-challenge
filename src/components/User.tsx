@@ -1,5 +1,7 @@
 import { UserContainer, UserInitials, UserInfoContainer, Role }  from "../components"
 
+// This is the user Component Container
+
 export const User = (props: { id: string, name: string, role: string }) => {
     return (
     <UserContainer key={props.id}>

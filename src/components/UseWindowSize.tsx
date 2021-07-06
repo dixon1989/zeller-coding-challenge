@@ -1,5 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 
+// Use this function for responsiveness
+
 export function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
   useLayoutEffect(() => {
