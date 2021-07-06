@@ -4,7 +4,7 @@ export type GetCustomerQuery = {
     }
   }
 
-  type ICustomer = {
+export type ICustomer = {
     email: string
     id: string
     name: string
